@@ -3,7 +3,7 @@ import os
 import subprocess
 import hashlib
 import time
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 
 # Function to find the steghide executable
 def find_snow():
@@ -49,61 +49,58 @@ class VideoSteganographyFFmpeg(ctk.CTkFrame):
 
     def setup_encode_tab(self):
         layout = ctk.CTkFrame(self.encode_tab)
-        layout.pack(pady=20)
+        layout.pack(pady=20, padx=20, fill="both", expand=True)
 
         self.carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path")
-        self.carrier_entry.pack(pady=10)
+        self.carrier_entry.grid(row=0, column=1, pady=10, padx=10, sticky="ew")
 
         carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier)
-        carrier_button.pack(pady=10)
+        carrier_button.grid(row=0, column=2, pady=10, padx=10, sticky="ew")
 
         self.secret_entry = ctk.CTkEntry(layout, placeholder_text="Secret File Path")
-        self.secret_entry.pack(pady=10)
+        self.secret_entry.grid(row=1, column=1, pady=10, padx=10, sticky="ew")
 
         secret_button = ctk.CTkButton(layout, text="Upload Secret", command=self.upload_secret)
-        secret_button.pack(pady=10)
-
-        
+        secret_button.grid(row=1, column=2, pady=10, padx=10, sticky="ew")
 
         hide_button = ctk.CTkButton(layout, text="Hide", command=self.hide_action)
-        hide_button.pack(pady=10)
+        hide_button.grid(row=2, column=1, columnspan=2, pady=10, padx=10, sticky="ew")
 
         reset_hide_button = ctk.CTkButton(layout, text="Reset", command=self.reset_hide_fields)
-        reset_hide_button.pack(pady=10)
+        reset_hide_button.grid(row=3, column=1, columnspan=2, pady=10, padx=10, sticky="ew")
 
     def setup_decode_tab(self):
         layout = ctk.CTkFrame(self.decode_tab)
-        layout.pack(pady=20)
-        ctk.CTkLabel(layout, text="Images", font=("Arial", 16, "bold")).pack(pady=20)
+        layout.pack(pady=20, padx=20, fill="both", expand=True)
+
+        ctk.CTkLabel(layout, text="Images", font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=3, pady=20)
 
         self.extract_carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path")
-        self.extract_carrier_entry.pack(pady=10)
+        self.extract_carrier_entry.grid(row=1, column=1, pady=10, padx=10, sticky="ew")
 
         extract_carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier_extract)
-        extract_carrier_button.pack(pady=10)
-
-        
+        extract_carrier_button.grid(row=1, column=2, pady=10, padx=10, sticky="ew")
 
         extract_button = ctk.CTkButton(layout, text="Extract", command=self.extract_action)
-        extract_button.pack(pady=10)
+        extract_button.grid(row=2, column=1, columnspan=2, pady=10, padx=10, sticky="ew")
 
         reset_extract_button = ctk.CTkButton(layout, text="Reset", command=self.reset_extract_fields)
-        reset_extract_button.pack(pady=10)
+        reset_extract_button.grid(row=3, column=1, columnspan=2, pady=10, padx=10, sticky="ew")
 
     def upload_carrier(self):
-        carrier_path = ctk.filedialog.askopenfilename()
+        carrier_path = filedialog.askopenfilename()
         if carrier_path:
             self.carrier_entry.delete(0, ctk.END)
             self.carrier_entry.insert(0, carrier_path)
 
     def upload_secret(self):
-        secret_path = ctk.filedialog.askopenfilename()
+        secret_path = filedialog.askopenfilename()
         if secret_path:
             self.secret_entry.delete(0, ctk.END)
             self.secret_entry.insert(0, secret_path)
 
     def upload_carrier_extract(self):
-        carrier_path = ctk.filedialog.askopenfilename()
+        carrier_path = filedialog.askopenfilename()
         if carrier_path:
             self.extract_carrier_entry.delete(0, ctk.END)
             self.extract_carrier_entry.insert(0, carrier_path)
@@ -178,24 +175,23 @@ class VideoSteganographyFFmpeg(ctk.CTkFrame):
         except Exception as e:
             messagebox.showerror("Error", f"Failed to run FFprobe: {e}")
 
-
     def reset_hide_fields(self):
         self.carrier_entry.delete(0, ctk.END)
         self.secret_entry.delete(0, ctk.END)
-        self.password_entry.delete(0, ctk.END)
 
     def reset_extract_fields(self):
         self.extract_carrier_entry.delete(0, ctk.END)
-        self.extract_password_entry.delete(0, ctk.END)
-
 
 # Main function to run the application
 if __name__ == "__main__":
+    ctk.set_appearance_mode("dark")  # Set the appearance mode to dark
+    ctk.set_default_color_theme("blue")  # Set the default color theme to blue
+
     root = ctk.CTk()  # Create the main CTk window
     root.title("Text Steganography Tool")
     root.geometry("800x600")  # Set the window size
 
-    app = ImageSteganography(root)  # Create the ImageSteganography app inside the window
+    app = VideoSteganographyFFmpeg(root)  # Create the VideoSteganographyFFmpeg app inside the window
     app.pack(expand=True, fill="both")  # Pack the app into the root window
 
     root.mainloop()  # Run the main event loop
