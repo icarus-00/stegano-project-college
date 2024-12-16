@@ -30,7 +30,7 @@ def generate_unique_filename(base_name):
     unique_hash = hash_object.hexdigest()
     return f"{unique_hash}_{timestamp}"
 
-class ImageSteganography(ctk.CTkFrame):
+class VideoSteganographyFFmpeg(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.setup_tabs()

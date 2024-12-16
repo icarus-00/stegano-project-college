@@ -3,13 +3,12 @@ import subprocess
 import hashlib
 import time
 import customtkinter as ctk
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 
 # Function to find the steghide executable
 def find_steghide():
     current_dir = os.path.dirname(os.path.abspath(__file__))
     steghide_path = os.path.join(current_dir, 'steghide', 'steghide.exe')
-    #encode_path = os.path.join(current_dir, 'steghide', 'steghide.exe')
     if not os.path.exists(steghide_path):
         raise FileNotFoundError("steghide.exe not found in the 'steghide' directory.")
     return steghide_path
@@ -50,63 +49,63 @@ class AudioSteganography(ctk.CTkFrame):
 
     def setup_encode_tab(self):
         layout = ctk.CTkFrame(self.encode_tab)
-        layout.pack(pady=20)
+        layout.pack(pady=20, padx=20)
 
-        self.carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path")
-        self.carrier_entry.pack(pady=10)
+        self.carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path", width=300)
+        self.carrier_entry.pack(pady=10, padx=10)
 
-        carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier)
-        carrier_button.pack(pady=10)
+        carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier, width=150)
+        carrier_button.pack(pady=10, padx=10)
 
-        self.secret_entry = ctk.CTkEntry(layout, placeholder_text="Secret File Path")
-        self.secret_entry.pack(pady=10)
+        self.secret_entry = ctk.CTkEntry(layout, placeholder_text="Secret File Path", width=300)
+        self.secret_entry.pack(pady=10, padx=10)
 
-        secret_button = ctk.CTkButton(layout, text="Upload Secret", command=self.upload_secret)
-        secret_button.pack(pady=10)
+        secret_button = ctk.CTkButton(layout, text="Upload Secret", command=self.upload_secret, width=150)
+        secret_button.pack(pady=10, padx=10)
 
-        self.password_entry = ctk.CTkEntry(layout, placeholder_text="Password", show='*')
-        self.password_entry.pack(pady=10)
+        self.password_entry = ctk.CTkEntry(layout, placeholder_text="Password", show='*', width=300)
+        self.password_entry.pack(pady=10, padx=10)
 
-        hide_button = ctk.CTkButton(layout, text="Hide", command=self.hide_action)
-        hide_button.pack(pady=10)
+        hide_button = ctk.CTkButton(layout, text="Hide", command=self.hide_action, width=150)
+        hide_button.pack(pady=10, padx=10)
 
-        reset_hide_button = ctk.CTkButton(layout, text="Reset", command=self.reset_hide_fields)
-        reset_hide_button.pack(pady=10)
+        reset_hide_button = ctk.CTkButton(layout, text="Reset", command=self.reset_hide_fields, width=150)
+        reset_hide_button.pack(pady=10, padx=10)
 
     def setup_decode_tab(self):
         layout = ctk.CTkFrame(self.decode_tab)
-        layout.pack(pady=20)
-        ctk.CTkLabel(layout, text="audio steghide", font=("Arial", 16, "bold")).pack(pady=20)
+        layout.pack(pady=20, padx=20)
+        ctk.CTkLabel(layout, text="Audio Steghide", font=("Arial", 16, "bold")).pack(pady=20)
 
-        self.extract_carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path")
-        self.extract_carrier_entry.pack(pady=10)
+        self.extract_carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path", width=300)
+        self.extract_carrier_entry.pack(pady=10, padx=10)
 
-        extract_carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier_extract)
-        extract_carrier_button.pack(pady=10)
+        extract_carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier_extract, width=150)
+        extract_carrier_button.pack(pady=10, padx=10)
 
-        self.extract_password_entry = ctk.CTkEntry(layout, placeholder_text="Password", show='*')
-        self.extract_password_entry.pack(pady=10)
+        self.extract_password_entry = ctk.CTkEntry(layout, placeholder_text="Password", show='*', width=300)
+        self.extract_password_entry.pack(pady=10, padx=10)
 
-        extract_button = ctk.CTkButton(layout, text="Extract", command=self.extract_action)
-        extract_button.pack(pady=10)
+        extract_button = ctk.CTkButton(layout, text="Extract", command=self.extract_action, width=150)
+        extract_button.pack(pady=10, padx=10)
 
-        reset_extract_button = ctk.CTkButton(layout, text="Reset", command=self.reset_extract_fields)
-        reset_extract_button.pack(pady=10)
+        reset_extract_button = ctk.CTkButton(layout, text="Reset", command=self.reset_extract_fields, width=150)
+        reset_extract_button.pack(pady=10, padx=10)
 
     def upload_carrier(self):
-        carrier_path = ctk.filedialog.askopenfilename(filetypes=[("audio files", ".wav")])
+        carrier_path = filedialog.askopenfilename(filetypes=[("audio files", ".wav")])
         if carrier_path:
             self.carrier_entry.delete(0, ctk.END)
             self.carrier_entry.insert(0, carrier_path)
 
     def upload_secret(self):
-        secret_path = ctk.filedialog.askopenfilename()
+        secret_path = filedialog.askopenfilename()
         if secret_path:
             self.secret_entry.delete(0, ctk.END)
             self.secret_entry.insert(0, secret_path)
 
     def upload_carrier_extract(self):
-        carrier_path = ctk.filedialog.askopenfilename()
+        carrier_path = filedialog.askopenfilename()
         if carrier_path:
             self.extract_carrier_entry.delete(0, ctk.END)
             self.extract_carrier_entry.insert(0, carrier_path)
@@ -185,3 +184,14 @@ class AudioSteganography(ctk.CTkFrame):
     def reset_extract_fields(self):
         self.extract_carrier_entry.delete(0, ctk.END)
         self.extract_password_entry.delete(0, ctk.END)
+
+if __name__ == "__main__":
+    app = ctk.CTk()
+    app.title("Audio Steganography")
+    app.geometry("600x400")
+    app.resizable(False, False)
+    ctk.set_appearance_mode("dark")  # Set the theme to dark mode
+    ctk.set_default_color_theme("blue")  # Set the color theme to blue
+    audio_steganography = AudioSteganography(app)
+    audio_steganography.pack(expand=True, fill="both")
+    app.mainloop()

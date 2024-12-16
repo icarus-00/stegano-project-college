@@ -3,7 +3,8 @@ import subprocess
 import hashlib
 import time
 import customtkinter as ctk
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
+from PIL import Image, ImageTk
 
 # Function to find the steghide executable
 def find_steghide():
@@ -48,67 +49,106 @@ class ImageSteganography(ctk.CTkFrame):
         self.setup_decode_tab()
 
     def setup_encode_tab(self):
-        layout = ctk.CTkFrame(self.encode_tab)
-        layout.pack(pady=20)
+        main_layout = ctk.CTkFrame(self.encode_tab)
+        main_layout.pack(pady=20, padx=20, fill="both", expand=True)
 
-        self.carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path")
-        self.carrier_entry.pack(pady=10)
+        left_pane = ctk.CTkFrame(main_layout)
+        left_pane.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
-        carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier)
-        carrier_button.pack(pady=10)
+        self.right_pane = ctk.CTkFrame(main_layout)
+        self.right_pane.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+        self.right_pane.grid_remove()  # Hide the right pane initially
 
-        self.secret_entry = ctk.CTkEntry(layout, placeholder_text="Secret File Path")
-        self.secret_entry.pack(pady=10)
+        main_layout.grid_columnconfigure(0, weight=1)
+        main_layout.grid_columnconfigure(1, weight=1)
+        main_layout.grid_rowconfigure(0, weight=1)
 
-        secret_button = ctk.CTkButton(layout, text="Upload Secret", command=self.upload_secret)
-        secret_button.pack(pady=10)
+        self.carrier_entry = ctk.CTkEntry(left_pane, placeholder_text="Carrier File Path", width=300)
+        self.carrier_entry.pack(pady=10, padx=10)
 
-        self.password_entry = ctk.CTkEntry(layout, placeholder_text="Password", show='*')
-        self.password_entry.pack(pady=10)
+        carrier_button = ctk.CTkButton(left_pane, text="Upload Carrier", command=self.upload_carrier, width=150)
+        carrier_button.pack(pady=10, padx=10)
 
-        hide_button = ctk.CTkButton(layout, text="Hide", command=self.hide_action)
-        hide_button.pack(pady=10)
+        self.secret_entry = ctk.CTkEntry(left_pane, placeholder_text="Secret File Path", width=300)
+        self.secret_entry.pack(pady=10, padx=10)
 
-        reset_hide_button = ctk.CTkButton(layout, text="Reset", command=self.reset_hide_fields)
-        reset_hide_button.pack(pady=10)
+        secret_button = ctk.CTkButton(left_pane, text="Upload Secret", command=self.upload_secret, width=150)
+        secret_button.pack(pady=10, padx=10)
+
+        self.password_entry = ctk.CTkEntry(left_pane, placeholder_text="Password", show='*', width=300)
+        self.password_entry.pack(pady=10, padx=10)
+
+        hide_button = ctk.CTkButton(left_pane, text="Hide", command=self.hide_action, width=150)
+        hide_button.pack(pady=10, padx=10)
+
+        reset_hide_button = ctk.CTkButton(left_pane, text="Reset", command=self.reset_hide_fields, width=150)
+        reset_hide_button.pack(pady=10, padx=10)
+
+        self.carrier_image_label = ctk.CTkLabel(self.right_pane, text="")
+        self.carrier_image_label.pack(pady=10, padx=10, expand=True)
 
     def setup_decode_tab(self):
-        layout = ctk.CTkFrame(self.decode_tab)
-        layout.pack(pady=20)
-        ctk.CTkLabel(layout, text="Images", font=("Arial", 16, "bold")).pack(pady=20)
+        main_layout = ctk.CTkFrame(self.decode_tab)
+        main_layout.pack(pady=20, padx=20, fill="both", expand=True)
 
-        self.extract_carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path")
-        self.extract_carrier_entry.pack(pady=10)
+        left_pane = ctk.CTkFrame(main_layout)
+        left_pane.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
-        extract_carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier_extract)
-        extract_carrier_button.pack(pady=10)
+        self.right_pane_decode = ctk.CTkFrame(main_layout)
+        self.right_pane_decode.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+        self.right_pane_decode.grid_remove()  # Hide the right pane initially
 
-        self.extract_password_entry = ctk.CTkEntry(layout, placeholder_text="Password", show='*')
-        self.extract_password_entry.pack(pady=10)
+        main_layout.grid_columnconfigure(0, weight=1)
+        main_layout.grid_columnconfigure(1, weight=1)
+        main_layout.grid_rowconfigure(0, weight=1)
 
-        extract_button = ctk.CTkButton(layout, text="Extract", command=self.extract_action)
-        extract_button.pack(pady=10)
+        ctk.CTkLabel(left_pane, text="Image Steghide", font=("Arial", 16, "bold")).pack(pady=20)
 
-        reset_extract_button = ctk.CTkButton(layout, text="Reset", command=self.reset_extract_fields)
-        reset_extract_button.pack(pady=10)
+        self.extract_carrier_entry = ctk.CTkEntry(left_pane, placeholder_text="Carrier File Path", width=300)
+        self.extract_carrier_entry.pack(pady=10, padx=10)
+
+        extract_carrier_button = ctk.CTkButton(left_pane, text="Upload Carrier", command=self.upload_carrier_extract, width=150)
+        extract_carrier_button.pack(pady=10, padx=10)
+
+        self.extract_password_entry = ctk.CTkEntry(left_pane, placeholder_text="Password", show='*', width=300)
+        self.extract_password_entry.pack(pady=10, padx=10)
+
+        extract_button = ctk.CTkButton(left_pane, text="Extract", command=self.extract_action, width=150)
+        extract_button.pack(pady=10, padx=10)
+
+        reset_extract_button = ctk.CTkButton(left_pane, text="Reset", command=self.reset_extract_fields, width=150)
+        reset_extract_button.pack(pady=10, padx=10)
+
+        self.extract_image_label = ctk.CTkLabel(self.right_pane_decode, text="")
+        self.extract_image_label.pack(pady=10, padx=10, expand=True)
 
     def upload_carrier(self):
-        carrier_path = ctk.filedialog.askopenfilename()
+        carrier_path = filedialog.askopenfilename(filetypes=[("BMP files", "*.bmp")])
         if carrier_path:
             self.carrier_entry.delete(0, ctk.END)
             self.carrier_entry.insert(0, carrier_path)
+            self.display_image(carrier_path, self.carrier_image_label)
+            self.right_pane.grid()  # Show the right pane
 
     def upload_secret(self):
-        secret_path = ctk.filedialog.askopenfilename()
+        secret_path = filedialog.askopenfilename()
         if secret_path:
             self.secret_entry.delete(0, ctk.END)
             self.secret_entry.insert(0, secret_path)
 
     def upload_carrier_extract(self):
-        carrier_path = ctk.filedialog.askopenfilename()
+        carrier_path = filedialog.askopenfilename(filetypes=[("BMP files", "*.bmp")])
         if carrier_path:
             self.extract_carrier_entry.delete(0, ctk.END)
             self.extract_carrier_entry.insert(0, carrier_path)
+            self.display_image(carrier_path, self.extract_image_label)
+            self.right_pane_decode.grid()  # Show the right pane
+
+    def display_image(self, image_path, label):
+        image = Image.open(image_path)
+        photo = ImageTk.PhotoImage(image)
+        label.configure(image=photo)
+        label.image = photo
 
     def hide_action(self):
         carrier_path = self.carrier_entry.get()
@@ -180,7 +220,24 @@ class ImageSteganography(ctk.CTkFrame):
         self.carrier_entry.delete(0, ctk.END)
         self.secret_entry.delete(0, ctk.END)
         self.password_entry.delete(0, ctk.END)
+        self.carrier_image_label.configure(image=None)
+        self.carrier_image_label.image = None
+        self.right_pane.grid_remove()  # Hide the right pane
 
     def reset_extract_fields(self):
         self.extract_carrier_entry.delete(0, ctk.END)
         self.extract_password_entry.delete(0, ctk.END)
+        self.extract_image_label.configure(image=None)
+        self.extract_image_label.image = None
+        self.right_pane_decode.grid_remove()  # Hide the right pane
+
+if __name__ == "__main__":
+    app = ctk.CTk()
+    app.title("Image Steganography")
+    app.geometry("800x600")
+    app.resizable(False, False)
+    ctk.set_appearance_mode("dark")  # Set the theme to dark mode
+    ctk.set_default_color_theme("green")  # Set the color theme to blue
+    image_steganography = ImageSteganography(app)
+    image_steganography.pack(expand=True, fill="both")
+    app.mainloop()
