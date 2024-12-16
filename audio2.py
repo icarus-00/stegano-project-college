@@ -76,7 +76,7 @@ class AudioSteganography(ctk.CTkFrame):
     def setup_decode_tab(self):
         layout = ctk.CTkFrame(self.decode_tab)
         layout.pack(pady=20)
-        ctk.CTkLabel(self.drawer, text="audio steghide", font=("Arial", 16, "bold")).pack(pady=20)
+        ctk.CTkLabel(layout, text="audio steghide", font=("Arial", 16, "bold")).pack(pady=20)
 
         self.extract_carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path")
         self.extract_carrier_entry.pack(pady=10)
