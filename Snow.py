@@ -15,7 +15,7 @@ def find_snow():
 
 # Get the path to steghide executable
 SNOW_PATH = find_snow()
-OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'code')
+OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'textfiles')
 ENCODE_DIR = os.path.join(OUTPUT_DIR, 'encode')
 DECODE_DIR = os.path.join(OUTPUT_DIR, 'decode')
 
@@ -136,6 +136,7 @@ class ImageSteganography(ctk.CTkFrame):
         ]
 
         try:
+            
             result = subprocess.run(command, capture_output=True, text=True)
             if result.returncode == 0:
                 messagebox.showinfo("Success", f"Hiding successful! File saved at:\n{output_file_path}")
@@ -145,37 +146,37 @@ class ImageSteganography(ctk.CTkFrame):
             messagebox.showerror("Error", f"Failed to run Snow: {e}")
 
     def extract_action(self):
-        carrier_path = self.extract_carrier_entry.get()
+            carrier_path = self.extract_carrier_entry.get()
 
-        if not carrier_path:
-            messagebox.showerror("Error", "Carrier file must be selected!")
-            return
+            if not carrier_path:
+                messagebox.showerror("Error", "Carrier file must be selected!")
+                return
 
-        password = self.extract_password_entry.get()
-        if not password:
-            messagebox.showerror("Error", "Password is required!")
-            return
+            password = self.extract_password_entry.get()
+            if not password:
+                messagebox.showerror("Error", "Password is required!")
+                return
 
-        output_filename ="Sayed.txt"
-        output_file_path = os.path.join(DECODE_DIR, output_filename)
+            output_filename = generate_unique_filename(os.path.basename(carrier_path)) + ".txt"
+            output_file_path = os.path.join(DECODE_DIR, output_filename)
 
-        command = [
-            SNOW_PATH,
-            "-C",
-            "-p", password,
-            carrier_path,
-            ">",
-            output_file_path  
-        ]
+            result =subprocess.run([
+                SNOW_PATH,
+                "-C",
+                "-p", password,
+                carrier_path,
+                
+                output_file_path  
+            ])
 
-        try:
-            result = subprocess.run(command, capture_output=True, text=True)
-            if result.returncode == 0:
-                messagebox.showinfo("Success", f"Extraction successful! File saved at:\n{output_file_path}")
-            else:
-                messagebox.showerror("Error", f"Snow failed:\n{result.stderr}")
-        except Exception as e:
-            messagebox.showerror("Error", f"Failed to run Steghide: {e}")
+            try:
+                
+                if result.returncode == 0:
+                    messagebox.showinfo("Success", f"Extraction successful! File saved at:\n{output_file_path}")
+                else:
+                    messagebox.showerror("Error", f"Snow failed:\n{result.stderr}")
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to run SNOW: {e}")
 
     def reset_hide_fields(self):
         self.carrier_entry.delete(0, ctk.END)
