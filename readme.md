@@ -6,5 +6,6 @@ the project was requested for the level 4 semester 1 of steganograph cirreculem
 2. encoding and decoding for wav audio files using mp3Stegano as a sub-process
 
 TODOs:
-[]- add video encoding and decode
-[]- add text files encod and decode
+
+- [ ] add video encoding and decode
+- [ ] add text files encod and decode
