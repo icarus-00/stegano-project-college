@@ -51,25 +51,25 @@ class TextSteganography(ctk.CTkFrame):
         layout = ctk.CTkFrame(self.encode_tab)
         layout.pack(pady=20)
 
-        self.carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path")
+        self.carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path", width=500)
         self.carrier_entry.pack(pady=10)
 
-        carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier)
+        carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier, width=150)
         carrier_button.pack(pady=10)
 
-        self.secret_entry = ctk.CTkEntry(layout, placeholder_text="Secret File Path")
+        self.secret_entry = ctk.CTkEntry(layout, placeholder_text="Secret File Path", width=500)
         self.secret_entry.pack(pady=10)
 
-        secret_button = ctk.CTkButton(layout, text="Upload Secret", command=self.upload_secret)
+        secret_button = ctk.CTkButton(layout, text="Upload Secret", command=self.upload_secret, width=150)
         secret_button.pack(pady=10)
 
-        self.password_entry = ctk.CTkEntry(layout, placeholder_text="Password", show='*')
+        self.password_entry = ctk.CTkEntry(layout, placeholder_text="Password", show='*', width=500)
         self.password_entry.pack(pady=10)
 
-        hide_button = ctk.CTkButton(layout, text="Hide", command=self.hide_action)
+        hide_button = ctk.CTkButton(layout, text="Hide", command=self.hide_action, width=150)
         hide_button.pack(pady=10)
 
-        reset_hide_button = ctk.CTkButton(layout, text="Reset", command=self.reset_hide_fields)
+        reset_hide_button = ctk.CTkButton(layout, text="Reset", command=self.reset_hide_fields, width=150)
         reset_hide_button.pack(pady=10)
 
     def setup_decode_tab(self):
@@ -77,19 +77,19 @@ class TextSteganography(ctk.CTkFrame):
         layout.pack(pady=20)
         ctk.CTkLabel(layout, text="Images", font=("Arial", 16, "bold")).pack(pady=20)
 
-        self.extract_carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path")
+        self.extract_carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path", width=350)
         self.extract_carrier_entry.pack(pady=10)
 
-        extract_carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier_extract)
+        extract_carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier_extract, width=150)
         extract_carrier_button.pack(pady=10)
 
-        self.extract_password_entry = ctk.CTkEntry(layout, placeholder_text="Password", show='*')
+        self.extract_password_entry = ctk.CTkEntry(layout, placeholder_text="Password", show='*', width=500)
         self.extract_password_entry.pack(pady=10)
 
-        extract_button = ctk.CTkButton(layout, text="Extract", command=self.extract_action)
+        extract_button = ctk.CTkButton(layout, text="Extract", command=self.extract_action, width=150)
         extract_button.pack(pady=10)
 
-        reset_extract_button = ctk.CTkButton(layout, text="Reset", command=self.reset_extract_fields)
+        reset_extract_button = ctk.CTkButton(layout, text="Reset", command=self.reset_extract_fields, width=150)
         reset_extract_button.pack(pady=10)
 
     def upload_carrier(self):
@@ -141,7 +141,7 @@ class TextSteganography(ctk.CTkFrame):
             if result.returncode == 0:
                 messagebox.showinfo("Success", f"Hiding successful! File saved at:\n{output_file_path}")
             else:
-                messagebox.showerror("Error", f"Snowfailed:\n{result.stderr}")
+                messagebox.showerror("Error", f"Snow failed:\n{result.stderr}")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to run Snow: {e}")
 
@@ -194,7 +194,8 @@ if __name__ == "__main__":
     root.title("Text Steganography Tool")
     root.geometry("800x600")  # Set the window size
 
-    app = ImageSteganography(root)  # Create the ImageSteganography app inside the window
+    app = TextSteganography(root)  # Create the TextSteganography app inside the window
     app.pack(expand=True, fill="both")  # Pack the app into the root window
 
     root.mainloop()  # Run the main event loop
+

@@ -1,0 +1,173 @@
+"// 1-
+// import 'dart:io';
+// void main(List<String> args) {
+//     print(""enter degree in fahrenheit:"");
+//     double f= double.parse(stdin.readLineSync()!);
+
+//     double C= (f-32)/1.8;
+
+//     print(""Celicius degrees is :$C"");
+// }
+
+// 2-
+// import 'dart:io';
+
+// void main(){
+//     print("" please Enter 3 digit int"");
+//     String input = stdin.readLineSync()!;
+//     int number = int.tryParse(input) ?? 0;
+//     if (number >= 100 && number <= 999) {
+//       if (isPalindrome(number)) {
+//         print(""$number is a palindrome number."");
+//       } else {
+//         print(""$number is not a palindrome number."");
+//       }
+//     } else {
+//       print(""no valid Please enter 3 digit int"");
+//     }
+//   }
+
+//   bool isPalindrome(int num) {
+//     String numString = num.toString();
+//     int length = numString.length;
+
+//     for (int i = 0; i < length ~/ 2; i++) {
+//       if (numString[i] != numString[length - 1 - i]) {
+//         return false;
+//       }
+//     }
+
+//     return true;
+
+// }
+// 3-
+// import'dart:io';
+
+// void main(List<String> args) {
+  
+//     print(""enter number for 3 digits:"");
+//     int number= int.parse(stdin.readLineSync()!);
+
+//     int reversenumber=0;
+//     int temp=number;
+
+//     while(temp !=0){
+//         int digit= temp%10;
+//         reversenumber = reversenumber * 10 + digit;
+//         temp =temp ~/ 10;
+//     }
+
+//     if(number == reversenumber){
+//       print(""palindrom number"");
+//     }else{
+//       print(""not palindrom number"");
+//     }
+// }
+// 4-
+// 4-
+// import 'dart:io';
+
+// void main(){
+
+
+//     print(isPalindrome(""radar""));
+//     print(isPalindrome(""monom""));
+//     print(isPalindrome(""level""));
+//     print(isPalindrome(""toqa""));
+//   }
+
+//   bool isPalindrome(String input) {
+
+//     input = input.toLowerCase();
+
+
+//     int start = 0;
+//     int end = input.length - 1;
+
+
+//     while (start < end) {
+
+//       if (!input[start].contains(RegExp(r'[a-z]'))) {
+//         start++;
+//         continue;
+//       }
+
+//       if (!input[end].contains(RegExp(r'[a-z]'))) {
+//         end--;
+//         continue;
+//       }
+
+
+//       if (input[start] != input[end]) {
+//         return false;
+//       }
+
+
+//       start++;
+//       end--;
+//     }
+
+
+//     return true;
+// }
+// 5-
+// import 'dart:io';
+// void main(List<String> args) {
+//    int number= int.parse(stdin.readLineSync()!);
+//    int n=1;
+//    do{
+//       print(""$n * $n = ${n*n} \n"");
+//       print(""$n * $n * $n = ${n*n*n} \n"");
+//       n++;
+
+//    }while(n<=number);
+// }
+// 6-
+// import 'dart:io';
+
+// void main(){
+
+//   int size = 10;
+
+
+//   print('   ' + List.generate(size, (index) => '${index + 1}'.padLeft(4)).join(''));
+
+
+//   print('  ' + List.filled(size * 4 + 1, '-').join(''));
+
+
+//   for (int i = 1; i <= size; i++) {
+
+//     String row = '$i |';
+
+//     for (int j = 1; j <= size; j++) {
+
+//       row += '${(i * j)}'.padLeft(4);
+//     }
+
+    
+//     print(row);
+//   }
+// }
+// 7-
+// import 'dart:io';
+
+// void main(List<String> args) {
+//   int even=0,odd=0;
+//   int number;
+//   List numbers=[];
+//   for(int i= 0 ;i<10;i++){
+//     print(""enter number ${i+1}:${number=int.parse(stdin.readLineSync()!)}"");
+//     numbers.add(number);
+//   }
+
+//   for(int i=0; i< numbers.length;i++){
+//       if(numbers[i]%2==0 ){
+//         even++;
+//       }else{
+//         odd++;
+//       }
+//   }
+//   print(""numebr of the even numbers is:$even \n"");
+//   print(""numebr of the even numbers is:$odd \n"");
+// }"

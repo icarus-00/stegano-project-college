@@ -51,40 +51,41 @@ class VideoSteganographyFFmpeg(ctk.CTkFrame):
         layout = ctk.CTkFrame(self.encode_tab)
         layout.pack(pady=20, padx=20, fill="both", expand=True)
 
-        self.carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path")
-        self.carrier_entry.grid(row=0, column=1, pady=10, padx=10, sticky="ew")
+        self.carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path", width=300)
+        self.carrier_entry.grid(row=0, column=0, pady=10, padx=10, sticky="ew")
 
-        carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier)
-        carrier_button.grid(row=0, column=2, pady=10, padx=10, sticky="ew")
+        carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier, width=150)
+        carrier_button.grid(row=0, column=1, pady=10, padx=10, sticky="ew")
 
-        self.secret_entry = ctk.CTkEntry(layout, placeholder_text="Secret File Path")
-        self.secret_entry.grid(row=1, column=1, pady=10, padx=10, sticky="ew")
+        self.secret_entry = ctk.CTkEntry(layout, placeholder_text="Secret File Path", width=300)
+        self.secret_entry.grid(row=1, column=0, pady=10, padx=10, sticky="ew")
 
-        secret_button = ctk.CTkButton(layout, text="Upload Secret", command=self.upload_secret)
-        secret_button.grid(row=1, column=2, pady=10, padx=10, sticky="ew")
+        secret_button = ctk.CTkButton(layout, text="Upload Secret", command=self.upload_secret, width=150)
+        secret_button.grid(row=1, column=1, pady=10, padx=10, sticky="ew")
 
         hide_button = ctk.CTkButton(layout, text="Hide", command=self.hide_action)
-        hide_button.grid(row=2, column=1, columnspan=2, pady=10, padx=10, sticky="ew")
+        hide_button.grid(row=2, column=0, columnspan=2, pady=10, padx=10, sticky="ew")
 
         reset_hide_button = ctk.CTkButton(layout, text="Reset", command=self.reset_hide_fields)
-        reset_hide_button.grid(row=3, column=1, columnspan=2, pady=10, padx=10, sticky="ew")
+        reset_hide_button.grid(row=3, column=0, columnspan=2, pady=10, padx=10, sticky="ew")
 
     def setup_decode_tab(self):
+        
         layout = ctk.CTkFrame(self.decode_tab)
         layout.pack(pady=20, padx=20, fill="both", expand=True)
 
-        ctk.CTkLabel(layout, text="Images", font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=3, pady=20)
+        ctk.CTkLabel(layout, text="Videos using ffmpeg metadata", font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=3, pady=20)
 
-        self.extract_carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path")
+        self.extract_carrier_entry = ctk.CTkEntry(layout, placeholder_text="Carrier File Path", width=300)
         self.extract_carrier_entry.grid(row=1, column=1, pady=10, padx=10, sticky="ew")
 
-        extract_carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier_extract)
+        extract_carrier_button = ctk.CTkButton(layout, text="Upload Carrier", command=self.upload_carrier_extract , width=150)
         extract_carrier_button.grid(row=1, column=2, pady=10, padx=10, sticky="ew")
 
-        extract_button = ctk.CTkButton(layout, text="Extract", command=self.extract_action)
+        extract_button = ctk.CTkButton(layout, text="Extract", command=self.extract_action,width=300)
         extract_button.grid(row=2, column=1, columnspan=2, pady=10, padx=10, sticky="ew")
 
-        reset_extract_button = ctk.CTkButton(layout, text="Reset", command=self.reset_extract_fields)
+        reset_extract_button = ctk.CTkButton(layout, text="Reset", command=self.reset_extract_fields, width=150)
         reset_extract_button.grid(row=3, column=1, columnspan=2, pady=10, padx=10, sticky="ew")
 
     def upload_carrier(self):

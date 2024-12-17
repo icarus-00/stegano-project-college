@@ -17,18 +17,18 @@ class SteganographyTool(ctk.CTk):
         self.configure(fg_color="#212121")
 
         # Custom Title Bar
-        self.title_bar = ctk.CTkFrame(self, corner_radius=0, height=35, fg_color="#000000")
-        self.title_bar.pack(side="top", fill="x")
+        # Custom Title Bar
+        # self.title_bar = ctk.CTkFrame(self, corner_radius=0, height=35, fg_color="#000000")
+        # self.title_bar.pack(side="top", fill="x")
 
-        self.app_name_label = ctk.CTkLabel(self.title_bar, text="Steganography Tool", font=ctk.CTkFont("Arial", 16, "bold"), text_color="white")
-        self.app_name_label.place(x=10, y=5)
+        # self.app_name_label = ctk.CTkLabel(self.title_bar, text="Steganography Tool", font=ctk.CTkFont("Arial", 16, "bold"), text_color="white")
+        # self.app_name_label.place(x=10, y=5)
 
-        self.close_button = ctk.CTkButton(self.title_bar, text="x ", command=self.destroy, width=30, height=30, corner_radius=0, fg_color="#000000", hover_color="#3e8e41")
-        self.close_button.place(relx=1, rely=0.5, anchor="center", x=-5, y=0)
+        # self.close_button = ctk.CTkButton(self.title_bar, text="x ", command=self.destroy, width=30, height=30, corner_radius=0, fg_color="#000000", hover_color="#3e8e41")
+        # self.close_button.place(relx=1, rely=0.5, anchor="center", x=-5, y=0)
 
-        self.hide_button = ctk.CTkButton(self.title_bar, text="-", command=self.iconify, width=30, height=30, corner_radius=0, fg_color="#000000", hover_color="#3e8e41")
-        self.hide_button.place(relx=1, rely=0.5, anchor="center", x=-35, y=0)
-
+        # self.hide_button = ctk.CTkButton(self.title_bar, text="-", command=self.iconify, width=30, height=30, corner_radius=0, fg_color="#000000", hover_color="#3e8e41")
+        # self.hide_button.place(relx=1, rely=0.5, anchor="center", x=-35, y=0)
         # Drawer
         self.drawer = ctk.CTkFrame(self, width=200, height=600, corner_radius=0, fg_color="#1a1a1a")
         self.drawer.pack(side="left", fill="y")
